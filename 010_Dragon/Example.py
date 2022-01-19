@@ -6,10 +6,13 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.0.0'
-__date__ = '2019/06/26 (Created: 2016/11/11)'
+__version__ = '0.1.0'
+__date__ = '2019/06/27 (Created: 2016/11/11)'
 
 import sys
+
+from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QWidget
 
 from jp.ac.kyoto_su.cse.ap.python.Trace import Trace    # トレース情報出力のON/OFFに用います。
 from jp.ac.kyoto_su.cse.ap.python.Trace import trace    # トレース情報出力のための関数です。
@@ -23,7 +26,17 @@ def main():
 	Trace.trace_on()
 	trace(main)
 
-	# 正常終了を意味する0を応答します。
+	# アプリケーションのインスタンスを生成します。
+	application = QApplication(sys.argv)
+
+	# ウィンドウ（ウェジェット）のインスタンスを生成し、ウィンドウを開きます。
+	window = QWidget()
+	window.show()
+
+	# アプリケーションのイベントループに入ります。
+	application.exec_()
+
+	# イベントループを抜けて、正常終了を意味する0を応答します。
 	return 0
 
 if __name__ == '__main__':
