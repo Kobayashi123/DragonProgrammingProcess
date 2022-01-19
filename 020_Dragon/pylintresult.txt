@@ -1,8 +1,21 @@
+************* Module python.OpenGLMVC.OpenGLWindow
+jp/ac/kyoto_su/cse/ap/python/OpenGLMVC/OpenGLWindow.py:17:0: W0311: Bad indentation. Found 2 tabs, expected 1 (bad-indentation)
+jp/ac/kyoto_su/cse/ap/python/OpenGLMVC/OpenGLWindow.py:21:0: W0311: Bad indentation. Found 2 tabs, expected 1 (bad-indentation)
+jp/ac/kyoto_su/cse/ap/python/OpenGLMVC/OpenGLWindow.py:22:0: W0311: Bad indentation. Found 4 tabs, expected 2 (bad-indentation)
+jp/ac/kyoto_su/cse/ap/python/OpenGLMVC/OpenGLWindow.py:25:0: W0311: Bad indentation. Found 4 tabs, expected 2 (bad-indentation)
+jp/ac/kyoto_su/cse/ap/python/OpenGLMVC/OpenGLWindow.py:27:0: W0311: Bad indentation. Found 4 tabs, expected 2 (bad-indentation)
+jp/ac/kyoto_su/cse/ap/python/OpenGLMVC/OpenGLWindow.py:29:0: W0311: Bad indentation. Found 4 tabs, expected 2 (bad-indentation)
+jp/ac/kyoto_su/cse/ap/python/OpenGLMVC/OpenGLWindow.py:30:0: W0311: Bad indentation. Found 4 tabs, expected 2 (bad-indentation)
+jp/ac/kyoto_su/cse/ap/python/OpenGLMVC/OpenGLWindow.py:31:0: W0311: Bad indentation. Found 4 tabs, expected 2 (bad-indentation)
+jp/ac/kyoto_su/cse/ap/python/OpenGLMVC/OpenGLWindow.py:33:0: W0311: Bad indentation. Found 4 tabs, expected 2 (bad-indentation)
+jp/ac/kyoto_su/cse/ap/python/OpenGLMVC/OpenGLWindow.py:34:0: W0311: Bad indentation. Found 4 tabs, expected 2 (bad-indentation)
+jp/ac/kyoto_su/cse/ap/python/OpenGLMVC/OpenGLWindow.py:37:0: W0311: Bad indentation. Found 4 tabs, expected 2 (bad-indentation)
+jp/ac/kyoto_su/cse/ap/python/OpenGLMVC/OpenGLWindow.py:38:0: W0311: Bad indentation. Found 4 tabs, expected 2 (bad-indentation)
 
 
 Report
 ======
-53 statements analysed.
+69 statements analysed.
 
 Statistics by type
 ------------------
@@ -10,11 +23,11 @@ Statistics by type
 +---------+-------+-----------+-----------+------------+---------+
 |type     |number |old number |difference |%documented |%badname |
 +=========+=======+===========+===========+============+=========+
-|module   |2      |2          |=          |100.00      |0.00     |
+|module   |3      |3          |=          |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
-|class    |1      |1          |=          |100.00      |0.00     |
+|class    |2      |2          |=          |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
-|method   |2      |2          |=          |100.00      |0.00     |
+|method   |3      |3          |=          |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
 |function |2      |2          |=          |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
@@ -26,7 +39,7 @@ External dependencies
 ::
 
     PyQt5 
-      \-QtWidgets (Example)
+      \-QtWidgets (Example,python.OpenGLMVC.OpenGLWindow)
 
 
 
@@ -36,13 +49,13 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |59     |49.58 |53       |+6.00      |
+|code      |77     |48.43 |77       |=          |
 +----------+-------+------+---------+-----------+
-|docstring |22     |18.49 |22       |=          |
+|docstring |31     |19.50 |31       |=          |
 +----------+-------+------+---------+-----------+
-|comment   |10     |8.40  |7        |+3.00      |
+|comment   |13     |8.18  |13       |=          |
 +----------+-------+------+---------+-----------+
-|empty     |28     |23.53 |24       |+4.00      |
+|empty     |38     |23.90 |38       |=          |
 +----------+-------+------+---------+-----------+
 
 
@@ -70,7 +83,7 @@ Messages by category
 +-----------+-------+---------+-----------+
 |refactor   |0      |0        |0          |
 +-----------+-------+---------+-----------+
-|warning    |0      |0        |0          |
+|warning    |12     |12       |12         |
 +-----------+-------+---------+-----------+
 |error      |0      |0        |0          |
 +-----------+-------+---------+-----------+
@@ -80,13 +93,15 @@ Messages by category
 Messages
 --------
 
-+-----------+------------+
-|message id |occurrences |
-+===========+============+
++----------------+------------+
+|message id      |occurrences |
++================+============+
+|bad-indentation |12          |
++----------------+------------+
 
 
 
 
---------------------------------------------------------------------
-Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
+------------------------------------------------------------------
+Your code has been rated at 8.26/10 (previous run: 8.26/10, +0.00)
 

@@ -14,15 +14,15 @@ from PyQt5.QtWidgets import QWidget
 from jp.ac.kyoto_su.cse.ap.python.Trace import trace
 
 class OpenGLWindow(QWidget):
-	"""
-	PyQt5のQOpenGLWidgetを利用した三次元グラフィックス（OpenGL）のモデル・ビュー・コントローラ（MVC：Model-View-Controller）のウィンドウです。
-	"""
+  """
+  PyQt5のQOpenGLWidgetを利用した三次元グラフィックス（OpenGL）のモデル・ビュー・コントローラ（MVC：Model-View-Controller）のウィンドウです。
+  """
 
-	def __init__(self, application, window_position=None, window_size=(400, 400)):
-		"""
-		OpenGLのMVC（OpenGL{Model,View,Controller}）を内包するウィンドウを生成します。
-		"""
-		trace(self)
+  def __init__(self, application, window_position=None, window_size=(400, 400)):
+    """
+    OpenGLのMVC（OpenGL{Model,View,Controller}）を内包するウィンドウを生成します。
+    """
+    trace(self)
 
     super().__init__(parent=None)
 
