@@ -6,14 +6,14 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.1.0'
-__date__ = '2019/06/27 (Created: 2016/11/11)'
+__version__ = '0.2.0'
+__date__ = '2019/06/28 (Created: 2016/11/11)'
 
 import sys
 
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QWidget
 
+from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.OpenGLWindow import OpenGLWindow
 from jp.ac.kyoto_su.cse.ap.python.Trace import Trace    # トレース情報出力のON/OFFに用います。
 from jp.ac.kyoto_su.cse.ap.python.Trace import trace    # トレース情報出力のための関数です。
 
@@ -29,8 +29,8 @@ def main():
 	# アプリケーションのインスタンスを生成します。
 	application = QApplication(sys.argv)
 
-	# ウィンドウ（ウェジェット）のインスタンスを生成し、ウィンドウを開きます。
-	window = QWidget()
+	# OpenGLウィンドウのインスタンスを生成し、ウィンドウを開きます。
+	window = OpenGLWindow(application)
 	window.show()
 
 	# アプリケーションのイベントループに入ります。
