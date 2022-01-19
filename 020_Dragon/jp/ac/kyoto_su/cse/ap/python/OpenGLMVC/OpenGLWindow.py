@@ -14,25 +14,25 @@ from PyQt5.QtWidgets import QWidget
 from jp.ac.kyoto_su.cse.ap.python.Trace import trace
 
 class OpenGLWindow(QWidget):
-  """
-  PyQt5のQOpenGLWidgetを利用した三次元グラフィックス（OpenGL）のモデル・ビュー・コントローラ（MVC：Model-View-Controller）のウィンドウです。
-  """
+	"""
+	PyQt5のQOpenGLWidgetを利用した三次元グラフィックス（OpenGL）のモデル・ビュー・コントローラ（MVC：Model-View-Controller）のウィンドウです。
+	"""
 
-  def __init__(self, application, window_position=None, window_size=(400, 400)):
-    """
-    OpenGLのMVC（OpenGL{Model,View,Controller}）を内包するウィンドウを生成します。
-    """
-    trace(self)
+	def __init__(self, application, window_position=None, window_size=(400, 400)):
+		"""
+		OpenGLのMVC（OpenGL{Model,View,Controller}）を内包するウィンドウを生成します。
+		"""
+		trace(self)
 
-    super().__init__(parent=None)
+		super().__init__(parent=None)
 
-    self.setMinimumSize(200, 200)
-    self.setMaximumSize(800, 800)
-    self.resize(*window_size)
+		self.setMinimumSize(200, 200)
+		self.setMaximumSize(800, 800)
+		self.resize(*window_size)
 
-    window_label = 'OpenGL Window'
-    self.setWindowTitle(window_label)
+		window_label = 'OpenGL Window'
+		self.setWindowTitle(window_label)
 
-    # ここでウィンドウの表示位置を決めます。
-    (lambda x: x)(application)
-    (lambda x: x)(window_position)
+		# ここでウィンドウの表示位置を決めます。
+		(lambda x: x)(application)
+		(lambda x: x)(window_position)
