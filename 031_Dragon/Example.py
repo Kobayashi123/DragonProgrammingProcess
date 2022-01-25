@@ -6,7 +6,7 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 __date__ = '2019/06/29 (Created: 2016/11/11)'
 
 import sys
@@ -35,6 +35,14 @@ class DragonBody:
 	def make_body(self):
 		"""
 		モデルに表示物を登録します。
+		"""
+		trace(self)
+
+		self.read()
+
+	def read(self):
+		"""
+		ドラゴン立体ファイルのURLよりダウンロードしたファイルから立体を読み込みます。
 		"""
 		trace(self)
 

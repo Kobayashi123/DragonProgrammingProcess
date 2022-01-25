@@ -6,11 +6,12 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 __date__ = '2019/06/29 (Created: 2016/11/11)'
 
 from PyQt5.QtWidgets import QWidget
 
+from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.MVC.OpenGLView import OpenGLView
 from jp.ac.kyoto_su.cse.ap.python.Trace import trace
 
 class OpenGLWindow(QWidget):
@@ -27,6 +28,7 @@ class OpenGLWindow(QWidget):
 		super().__init__(parent=None)
 
 		self._model = model
+		self._view = OpenGLView(self._model, width=window_size[0], height=window_size[1], parent=self)
 		self.setMinimumSize(200, 200)
 		self.setMaximumSize(800, 800)
 		self.resize(*window_size)
