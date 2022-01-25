@@ -6,16 +6,37 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.2.0'
-__date__ = '2019/06/28 (Created: 2016/11/11)'
+__version__ = '0.3.0'
+__date__ = '2019/06/29 (Created: 2016/11/11)'
 
 import sys
 
 from PyQt5.QtWidgets import QApplication
 
+from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.MVC.OpenGLModel import OpenGLModel
 from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.OpenGLWindow import OpenGLWindow
 from jp.ac.kyoto_su.cse.ap.python.Trace import Trace    # トレース情報出力のON/OFFに用います。
 from jp.ac.kyoto_su.cse.ap.python.Trace import trace    # トレース情報出力のための関数です。
+
+class DragonBody:
+	"""
+	ドラゴン立体です。
+	"""
+
+	def __init__(self, model):
+		"""
+		モデル(OpenGLModel)からドラゴン立体のインスタンスを生成します。
+		"""
+		trace(self)
+
+		self._usr = 'http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/Dragon/dragon.txt'
+		self._model = model
+
+	def make_body(self):
+		"""
+		モデルに表示物を登録します。
+		"""
+		trace(self)
 
 def main():
 	"""
@@ -26,11 +47,18 @@ def main():
 	Trace.trace_on()
 	trace(main)
 
+	# OpenGLのモデルのインスタンスを生成します。
+	model = OpenGLModel()
+
+	# ドラゴン立体のインスタンスを生成し、モデルに表示物を登録します。
+	dragon = DragonBody(model)
+	dragon.make_body()
+
 	# アプリケーションのインスタンスを生成します。
 	application = QApplication(sys.argv)
 
 	# OpenGLウィンドウのインスタンスを生成し、ウィンドウを開きます。
-	window = OpenGLWindow(application)
+	window = OpenGLWindow(model, application)
 	window.show()
 
 	# アプリケーションのイベントループに入ります。
