@@ -7,7 +7,7 @@ $ python setup.py sdist
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 __date__ = '2019/06/29 (Created: 2016/11/11)'
 
 from distutils.core import setup

@@ -1,0 +1,39 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+例題プログラム：この例題を改変して大きなプログラムを作る足がかりにしてください。
+"""
+
+__author__ = 'AOKI Atsushi'
+__version__ = '0.3.1'
+__date__ = '2019/06/29 (Created: 2016/11/11)'
+
+from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import QOpenGLWidget
+
+from jp.ac.kyoto_su.cse.ap.python.Trace import trace
+
+class OpenGLView(QOpenGLWidget):
+	"""
+	PyQt5のQOpenGLWidgetを利用した三次元グラフィックス（OpenGL）のビュー（View of MVC）です。
+	"""
+
+	def __init__(self, model, width=400, height=400, parent=None):
+		"""
+		OpenGLViewのインスタンスを生成します。
+		"""
+		trace(self)
+
+		super().__init__(parent)
+		self._model = model
+		self._width = width
+		self._height = height
+
+	def sizeHint(self):
+		"""
+		OpenGLViewの大きさを応答します。
+		"""
+		trace(self)
+
+		return QSize(self._width, self._height)
