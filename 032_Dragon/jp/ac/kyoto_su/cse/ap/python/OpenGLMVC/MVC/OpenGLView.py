@@ -12,6 +12,7 @@ __date__ = '2019/06/29 (Created: 2016/11/11)'
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QOpenGLWidget
 
+from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.MVC.OpenGLController import OpenGLController
 from jp.ac.kyoto_su.cse.ap.python.Trace import trace
 
 class OpenGLView(QOpenGLWidget):
@@ -27,6 +28,7 @@ class OpenGLView(QOpenGLWidget):
 
 		super().__init__(parent)
 		self._model = model
+		self._controller = OpenGLController(self)
 		self._width = width
 		self._height = height
 
