@@ -7,8 +7,8 @@ $ python setup.py sdist
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.3.4'
-__date__ = '2019/06/29 (Created: 2016/11/11)'
+__version__ = '0.4.0'
+__date__ = '2019/06/30 (Created: 2016/11/11)'
 
 from distutils.core import setup
 import os, platform, re
