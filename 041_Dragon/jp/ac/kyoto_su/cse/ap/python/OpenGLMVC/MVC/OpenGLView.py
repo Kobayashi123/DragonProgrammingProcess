@@ -6,10 +6,11 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.4.0'
+__version__ = '0.4.1'
 __date__ = '2019/06/30 (Created: 2016/11/11)'
 
 from PyQt5.QtCore import QSize
+from PyQt5.QtGui import QOpenGLVersionProfile
 from PyQt5.QtWidgets import QOpenGLWidget
 
 from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.MVC.OpenGLController import OpenGLController
@@ -31,6 +32,53 @@ class OpenGLView(QOpenGLWidget):
 		self._controller = OpenGLController(self)
 		self._width = width
 		self._height = height
+		self._gl = None
+
+	def initializeGL(self):
+		"""
+		OpenGLの初期化を行います。
+		"""
+		trace(self)
+
+		version = QOpenGLVersionProfile()
+		version.setVersion(2, 1)
+
+		self._gl = self.context().versionFunctions(version)
+		self._gl.initializeGLFunctions()
+
+		gl = self._gl
+		gl.glEnable(gl.GL_COLOR_MATERIAL)
+		gl.glEnable(gl.GL_DEPTH_TEST)
+		gl.glEnable(gl.GL_CULL_FACE)
+		gl.glEnable(gl.GL_NORMALIZE)
+		gl.glShadeModel(gl.GL_SMOOTH)
+
+		gl.glClearColor(0.9, 0.9, 0.9, 1.0)    # Red, Green, Blue, Alpha
+
+	def paintGL(self):
+		"""
+		OpenGLViewの中を描きます。
+		"""
+		trace(self)
+
+		gl = self._gl
+
+		gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT)
+
+	def resizeGL(self, width, height):
+		"""
+		OpenGLViewの大きさが変更された際に、OpenGLのビューポートを再形成します。
+		"""
+		trace(self)
+
+		self._width = width
+		self._height = height
+		extent = min(width, height)
+		x = (width - extent) // 2
+		y = (height - extent) // 2
+		w = extent
+		h = extent
+		self._gl.glViewport(x, y, w, h)
 
 	def sizeHint(self):
 		"""
