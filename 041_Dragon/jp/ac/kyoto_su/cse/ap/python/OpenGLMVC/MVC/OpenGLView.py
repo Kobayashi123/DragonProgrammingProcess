@@ -44,7 +44,7 @@ class OpenGLView(QOpenGLWidget):
 		version.setVersion(2, 1)
 
 		self._gl = self.context().versionFunctions(version)
-		self._gl.initializeGLFunctions()
+		self._gl.initializeOpenGLFunctions()
 
 		gl = self._gl
 		gl.glEnable(gl.GL_COLOR_MATERIAL)
