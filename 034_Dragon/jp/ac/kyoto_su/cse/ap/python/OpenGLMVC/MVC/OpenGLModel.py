@@ -6,7 +6,7 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.3.1'
+__version__ = '0.3.4'
 __date__ = '2019/06/29 (Created: 2016/11/11)'
 
 from jp.ac.kyoto_su.cse.ap.python.Trace import trace
