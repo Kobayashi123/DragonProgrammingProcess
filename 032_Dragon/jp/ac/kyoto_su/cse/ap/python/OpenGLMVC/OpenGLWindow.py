@@ -29,6 +29,8 @@ class OpenGLWindow(QWidget):
 
 		self._model = model
 		self._view = OpenGLView(self._model, width=window_size[0], height=window_size[1], parent=self)
+		self._controller = self._view._controller
+
 		self.setMinimumSize(200, 200)
 		self.setMaximumSize(800, 800)
 		self.resize(*window_size)
