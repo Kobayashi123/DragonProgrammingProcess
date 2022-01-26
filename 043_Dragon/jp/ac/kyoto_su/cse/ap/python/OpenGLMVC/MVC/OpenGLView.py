@@ -6,8 +6,10 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.4.2'
+__version__ = '0.4.3'
 __date__ = '2019/06/30 (Created: 2016/11/11)'
+
+import math
 
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QOpenGLVersionProfile
@@ -33,6 +35,22 @@ class OpenGLView(QOpenGLWidget):
 		self._width = width
 		self._height = height
 		self._gl = None
+
+	def gluPerspective(self, fovy, aspect, near, far):
+		"""
+		縦の視野角（fovy）、縦に対する横方向の視野角の倍率（aspect）、近い位置（near）、遠い位置（far）を設定します。
+		"""
+		#trace(self)
+
+		radian = 2.0 * math.pi * fovy / 360.0
+		scale = 1.0 / math.tan(radian / 2)
+		matrix = [ \
+			scale / aspect, 0, 0, 0, \
+			0, scale, 0, 0, \
+			0, 0, (far + near) / (near - far), -1, \
+			0, 0, (2 * far * near) / (near - far), 0, \
+			]
+		self._gl.glLoadMatrixf(matrix)
 
 	def initializeGL(self):
 		"""
@@ -61,7 +79,17 @@ class OpenGLView(QOpenGLWidget):
 		"""
 		trace(self)
 
+		fovy = self._model._fovy
+
+		aspect = float(self._width) / float(self._height)
+		near = 0.01
+		far = 100.0
+
 		gl = self._gl
+
+		gl.glMatrixMode(gl.GL_PROJECTION)
+		gl.glLoadIdentity()
+		self.gluPerspective(fovy, aspect, near, far)
 
 		gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT)
 
