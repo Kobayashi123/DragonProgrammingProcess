@@ -6,7 +6,7 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.4.3'
+__version__ = '0.4.4'
 __date__ = '2019/06/30 (Created: 2016/11/11)'
 
 import math
@@ -35,6 +35,41 @@ class OpenGLView(QOpenGLWidget):
 		self._width = width
 		self._height = height
 		self._gl = None
+
+	def gluLookAt(self, eye, sight, up):
+		"""
+		視点（eye）、注視点（sight）、上方向（up）を設定します。
+		"""
+		#trace(self)
+
+		forward = [sight[0] - eye[0], sight[1] - eye[1], sight[2] - eye[2]]
+
+		self._normalize(forward)
+
+		side = [0,] * 3
+		self._cross(forward, up, side)
+		self._normalize(side)
+
+		self._cross(side, forward, up)
+
+		transform_matrix = [ \
+			side[0], up[0], -forward[0], 0, \
+			side[1], up[1], -forward[1], 0, \
+			side[2], up[2], -forward[2], 0, \
+			0, 0, 0, 1, \
+			]
+
+		translation_matrix = [ \
+			1, 0, 0, 0, \
+			0, 1, 0, 0, \
+			0, 0, 1, 0, \
+			-eye[0], -eye[1], -eye[2], 1, \
+			]
+
+		matrix = [0,] * 16
+		self._multiplication(transform_matrix, translation_matrix, matrix)
+		self._multiplication(transform_matrix, translation_matrix, matrix)
+		self._gl.glLoadMatrixf(matrix)
 
 	def gluPerspective(self, fovy, aspect, near, far):
 		"""
@@ -79,6 +114,9 @@ class OpenGLView(QOpenGLWidget):
 		"""
 		trace(self)
 
+		eye_point = self._model._eye_point
+		sight_point = self.model._sight_point
+		up_vector = self.model._up_vector
 		fovy = self._model._fovy
 
 		aspect = float(self._width) / float(self._height)
@@ -90,6 +128,10 @@ class OpenGLView(QOpenGLWidget):
 		gl.glMatrixMode(gl.GL_PROJECTION)
 		gl.glLoadIdentity()
 		self.gluPerspective(fovy, aspect, near, far)
+
+		gl.glMatrixMode(gl.GL_MODELVIEW)
+		gl.glLoadIdentity()
+		self.gluLookAt(eye_point, sight_point, up_vector)
 
 		gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT)
 
@@ -139,6 +181,41 @@ class OpenGLView(QOpenGLWidget):
 		trace(self)
 
 		return QSize(self._width, self._height)
+
+	@staticmethod
+	def _cross(src1, src2, dst):
+		"""
+		二つのベクトル（二つの座標：src1=(x1,y1,z1), src2=(x2,y2,z2)）の外積を求めます。
+		"""
+
+		dst[0] = src1[1] * src2[2] - src1[2] * src2[1]
+		dst[1] = src1[2] * src2[0] - src1[0] * src2[2]
+		dst[2] = src1[0] * src2[1] - src1[1] * src2[0]
+
+	@staticmethod
+	def _nomalize(v):
+		"""
+		ベクトル（座標：v=(x,y,z)）を正規化します。
+		"""
+
+		m = math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2])
+		if m > 0.0:
+			m = 1.0 / m
+		else:
+			m = 0.0
+		v[0] = v[0] * m
+		v[1] = v[1] * m
+		v[2] = v[2] * m
+
+	@staticmethod
+	def _multiplication(src1, src2, dst):
+		"""
+		二つの同次座標変換行列を合成します。
+		"""
+
+		for y in range(4):
+			for x in range(4):
+				dst[y*4+x] = src2[y*4] * src1[x] + src2[y*4+1] * src1[x+4] + src2[y*4+2] * src1[x+8] + src2[y*4+3] * src1[x+12]
 
 	def mouseMoveEvent(self, event):
 		"""
