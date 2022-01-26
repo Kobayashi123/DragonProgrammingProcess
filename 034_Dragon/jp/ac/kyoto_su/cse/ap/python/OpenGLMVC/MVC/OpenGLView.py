@@ -6,7 +6,7 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.3.1'
+__version__ = '0.3.4'
 __date__ = '2019/06/29 (Created: 2016/11/11)'
 
 from PyQt5.QtCore import QSize
@@ -39,3 +39,15 @@ class OpenGLView(QOpenGLWidget):
 		trace(self)
 
 		return QSize(self._width, self._height)
+
+	def mouseMoveEvent(self, event):
+		"""
+		マウスが移動した際にコントローラに通知します。
+		"""
+		self._controller.motion(event)
+
+	def mousePressEvent(self, event):
+		"""
+		マウスボタンが押された際にコントローラに通知します。
+		"""
+		self._controller.mouse(event)

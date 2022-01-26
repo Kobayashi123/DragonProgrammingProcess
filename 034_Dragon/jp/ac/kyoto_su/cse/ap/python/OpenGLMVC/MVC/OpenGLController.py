@@ -6,7 +6,7 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.3.2'
+__version__ = '0.3.4'
 __date__ = '2019/06/29 (Created: 2016/11/11)'
 
 import sys
@@ -34,3 +34,27 @@ class OpenGLController:
 		trace(self)
 
 		sys.exit(0)
+
+	def keyboard(self, event):
+		"""
+		キーボードが押されたときの処理をします。
+		"""
+		trace(self)
+
+		(lambda x: x) (event)
+
+	def motion(self, event):
+		"""
+		マウスの左ボタンを押しながらの移動を処理します。
+		"""
+		trace(self)
+
+		(lambda x: x) (event)
+
+	def mouse(self, event):
+		"""
+		マウスの左ボタンが押されたときの処理をします。
+		"""
+		trace(self)
+
+		(lambda x: x) (event)

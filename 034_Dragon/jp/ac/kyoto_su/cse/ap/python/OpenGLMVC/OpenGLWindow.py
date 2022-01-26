@@ -36,8 +36,18 @@ class OpenGLWindow(QWidget):
 		self.resize(*window_size)
 
 		window_label = 'OpenGL Window'
+		if self._model._body_name:
+			window_label = window_label + '[' + self._model._body_name + ']'
 		self.setWindowTitle(window_label)
 
 		# ここでウィンドウの表示位置を決めます。
 		(lambda x: x)(application)
 		(lambda x: x)(window_position)
+
+	def keyPressEvent(self, event):
+		"""
+		キーが押された際にコントローラに通知します。
+		"""
+		trace(self)
+
+		self._controller.keyboard(event)
