@@ -6,7 +6,7 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.4.1'
+__version__ = '0.4.2'
 __date__ = '2019/06/30 (Created: 2016/11/11)'
 
 from PyQt5.QtCore import QSize
@@ -64,6 +64,30 @@ class OpenGLView(QOpenGLWidget):
 		gl = self._gl
 
 		gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT)
+
+		# 絶対座標系（X軸：赤、Y軸：緑、Z軸：青）を描きます。負方向を1とすると、正方向は黄金比(1.618)になります。
+		self.rendering_axes(gl)
+
+	def rendering_axes(self, gl):
+		"""
+		世界座標系（絶対座標系）を描画（レンダリング）します。
+		"""
+		trace(self)
+
+		axes_scale = self._model._axes_scale
+		map_function = (lambda value: value * axes_scale)
+		scaled_by_n = (lambda vertex: list(map(map_function, vertex)))
+		gl.glBegin(gl.GL_LINES)
+		gl.glColor4f(1.0, 0.0, 0.0, 1.0)
+		gl.glVertex3fv(scaled_by_n([-1.000, 0.0, 0.0]))
+		gl.glVertex3fv(scaled_by_n([+1.618, 0.0, 0.0]))
+		gl.glColor4f(0.0, 1.0, 0.0, 1.0)
+		gl.glVertex3fv(scaled_by_n([0.0, -1.000, 0.0]))
+		gl.glVertex3fv(scaled_by_n([0.0, +1.618, 0.0]))
+		gl.glColor4f(0.0, 0.0, 1.0, 1.0)
+		gl.glVertex3fv(scaled_by_n([0.0, 0.0, -1.000]))
+		gl.glVertex3fv(scaled_by_n([0.0, 0.0, +1.618]))
+		gl.glEnd()
 
 	def resizeGL(self, width, height):
 		"""
