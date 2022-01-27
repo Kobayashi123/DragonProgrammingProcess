@@ -6,7 +6,7 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.5.0'
+__version__ = '0.5.1'
 __date__ = '2019/07/01 (Created: 2016/11/11)'
 
 import os
