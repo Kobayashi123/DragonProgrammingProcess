@@ -6,8 +6,8 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.4.5'
-__date__ = '2019/06/30 (Created: 2016/11/11)'
+__version__ = '0.5.0'
+__date__ = '2019/07/01 (Created: 2016/11/11)'
 
 from jp.ac.kyoto_su.cse.ap.python.Trace import trace
 
@@ -29,6 +29,33 @@ class OpenGLModel:
 		self._fovy = self._default_fovy = 12.64
 		self._axes_scale = 1.0
 		self._body_name = None
+
+	def add(self, object):
+		"""
+		OpenGLModelの表示物にレンダリングできる物を入れます。
+		"""
+		# trace(self)
+
+		self._objects.append(object)
+
+	def add_all(self, objects):
+		"""
+		OpenGLModelの表示物に複数のレンダリングできる物たちを入れます。
+		"""
+		# trace(self)
+
+		for object in objects:
+			self.add(object)
+
+	def rendering(self, gl):
+		"""
+		OpenGLModelをレンダリングします。
+		"""
+		trace(self)
+
+		for object in self._objects:
+			object.rendering(gl)
+		gl.glEndList()
 
 	def set_projection(self, **dictionary):
 		"""

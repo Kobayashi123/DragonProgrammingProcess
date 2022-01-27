@@ -6,8 +6,8 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.4.5'
-__date__ = '2019/06/30 (Created: 2016/11/11)'
+__version__ = '0.5.0'
+__date__ = '2019/07/01 (Created: 2016/11/11)'
 
 import math
 
@@ -152,6 +152,9 @@ class OpenGLView(QOpenGLWidget):
 
 		# 絶対座標系（X軸：赤、Y軸：緑、Z軸：青）を描きます。負方向を1とすると、正方向は黄金比(1.618)になります。
 		self.rendering_axes(gl)
+
+		# モデルを描き出します。
+		self._model.rendering(gl)
 
 	def rendering_axes(self, gl):
 		"""
