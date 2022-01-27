@@ -6,7 +6,7 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.4.4'
+__version__ = '0.4.5'
 __date__ = '2019/06/30 (Created: 2016/11/11)'
 
 import math
@@ -134,6 +134,21 @@ class OpenGLView(QOpenGLWidget):
 		self.gluLookAt(eye_point, sight_point, up_vector)
 
 		gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT)
+
+		# 照明を設定します
+		gl.glEnable(gl.GL_LIGHTING)
+		gl.glLightModelfv(gl.GL_LIGHT_MODEL_AMBIENT, [0.5, 0.5, 0.5, 1.0])
+		gl.glLightModelf(gl.GL_LIGHT_MODEL_LOCAL_VIEWER, 0.0)
+		gl.glLightModelf(gl.GL_LIGHT_MODEL_TWO_SIDE, 1.0)
+		gl.glEnable(gl.GL_LIGHT0)
+		gl.glLightfv(gl.GL_LIGHT0, gl.GL_POSITION, [0.0, 0.0, 1.0, 0.0])
+		gl.glLightfv(gl.GL_LIGHT0, gl.GL_SPOT_DIRECTION, [0.0, 0.0, -1.0])
+		gl.glLightfv(gl.GL_LIGHT0, gl.GL_SPOT_CUTOFF, [90.0])
+		gl.glLightfv(gl.GL_LIGHT0, gl.GL_DIFFUSE, [0.5, 0.5, 0.5, 1.0])
+		gl.glLightfv(gl.GL_LIGHT0, gl.GL_SPECULAR, [0.5, 0.5, 0.5, 1.0])
+		gl.glLightfv(gl.GL_LIGHT0, gl.GL_LINEAR_ATTENUATION, [0.0])
+		gl.glLightfv(gl.GL_LIGHT0, gl.GL_QUADRATIC_ATTENUATION, [0.0])
+		gl.glLightfv(gl.GL_LIGHT0, gl.GL_CONSTANT_ATTENUATION, [1.0])
 
 		# 絶対座標系（X軸：赤、Y軸：緑、Z軸：青）を描きます。負方向を1とすると、正方向は黄金比(1.618)になります。
 		self.rendering_axes(gl)
