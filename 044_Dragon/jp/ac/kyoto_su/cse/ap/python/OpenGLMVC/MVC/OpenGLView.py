@@ -40,7 +40,7 @@ class OpenGLView(QOpenGLWidget):
 		"""
 		視点（eye）、注視点（sight）、上方向（up）を設定します。
 		"""
-		#trace(self)
+		# trace(self)
 
 		forward = [sight[0] - eye[0], sight[1] - eye[1], sight[2] - eye[2]]
 
@@ -115,8 +115,8 @@ class OpenGLView(QOpenGLWidget):
 		trace(self)
 
 		eye_point = self._model._eye_point
-		sight_point = self.model._sight_point
-		up_vector = self.model._up_vector
+		sight_point = self._model._sight_point
+		up_vector = self._model._up_vector
 		fovy = self._model._fovy
 
 		aspect = float(self._width) / float(self._height)
@@ -193,7 +193,7 @@ class OpenGLView(QOpenGLWidget):
 		dst[2] = src1[0] * src2[1] - src1[1] * src2[0]
 
 	@staticmethod
-	def _nomalize(v):
+	def _normalize(v):
 		"""
 		ベクトル（座標：v=(x,y,z)）を正規化します。
 		"""
