@@ -6,8 +6,8 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.6.2'
-__date__ = '2019/07/02 (Created: 2016/11/11)'
+__version__ = '0.7.0'
+__date__ = '2019/07/03 (Created: 2016/11/11)'
 
 import os
 import sys
@@ -17,7 +17,6 @@ from PyQt5.QtWidgets import QApplication
 
 from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.MVC.OpenGLModel import OpenGLModel
 from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.OpenGLWindow import OpenGLWindow
-from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Parts.OpenGLPolygon import OpenGLPolygon
 from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Parts.OpenGLTriangle import OpenGLTriangle
 from jp.ac.kyoto_su.cse.ap.python.Trace import Trace    # トレース情報出力のON/OFFに用います。
 from jp.ac.kyoto_su.cse.ap.python.Trace import trace    # トレース情報出力のための関数です。
@@ -79,52 +78,28 @@ class DragonBody:
 		while True:
 			a_string = a_file.readline()
 			if not a_string: break
-		##### 試しを開始 ###########################################################################
-
-		########################################################################
-		# モデルの表示物にグレーの三角形（明暗の表裏）を入れます。
-		########################################################################
-		surfaces = []
-		# 三角形の表面（おもて：法線ベクトル+Z）：明るいグレー
-		surfaces.append([(0.0, 0.0, 0.0), (0.0, 1.0, 0.0), (-1.0, 0.0, 0.0), (0.75, 0.75, 0.75)])
-		# 三角形の裏面（うら：法線ベクトル-Z）：暗いグレー
-		surfaces.append([(0.0, 0.0, 0.0), (-1.0, 0.0, 0.0), (0.0, 1.0, 0.0), (0.25, 0.25, 0.25)])
-		# 三角形二つで三角形の表裏
-		triangles = []
-		for surface in surfaces:
-			triangle = OpenGLTriangle(*surface[:3])
-			triangle.rgb(*surface[3])
-			triangles.append(triangle)
-		# 三角形の表裏の両方を追加
-		self._model.add_all(triangles)
-		########################################################################
-
-		########################################################################
-		# モデルの表示物にカラーキューブ（色方体：六面体）を入れます。
-		########################################################################
-		surfaces = []
-		# 第一番：Z=1の面（法線ベクトル+Zの四角形）：青〜マゼンタ〜白〜シアン
-		surfaces.append([(0.0, 0.0, 1.0), (1.0, 0.0, 1.0), (1.0, 1.0, 1.0), (0.0, 1.0, 1.0)])
-		# 第ニ番：Z=0の面（法線ベクトル-Zの四角形）：緑〜黄〜赤〜黒
-		surfaces.append([(0.0, 1.0, 0.0), (1.0, 1.0, 0.0), (1.0, 0.0, 0.0), (0.0, 0.0, 0.0)])
-		# 第三番：X=1の面（法線ベクトル+Xの四角形）：赤〜黄〜白〜マゼンタ
-		surfaces.append([(1.0, 0.0, 0.0), (1.0, 1.0, 0.0), (1.0, 1.0, 1.0), (1.0, 0.0, 1.0)])
-		# 第四番：X=0の面（法線ベクトル-Xの四角形）：青〜シアン〜緑〜黒
-		surfaces.append([(0.0, 0.0, 1.0), (0.0, 1.0, 1.0), (0.0, 1.0, 0.0), (0.0, 0.0, 0.0)])
-		# 第五番：Y=1の面（法線ベクトル+Yの四角形）：シアン〜白〜黄〜緑
-		surfaces.append([(0.0, 1.0, 1.0), (1.0, 1.0, 1.0), (1.0, 1.0, 0.0), (0.0, 1.0, 0.0)])
-		# 第六番：Y=0の面（法線ベクトル-Yの四角形）：黒〜赤〜マゼンタ〜青
-		surfaces.append([(0.0, 0.0, 0.0), (1.0, 0.0, 0.0), (1.0, 0.0, 1.0), (0.0, 0.0, 1.0)])
-		# ポリゴン六個でカラーキューブ（色方体：六面体）
-		polygons = []
-		for surface in surfaces:
-			polygon = OpenGLPolygon(vertexes=surface, colors=surface)
-			polygons.append(polygon)
-		# 色方体の六面を追加
-		self._model.add_all(polygons)
-		########################################################################
-
-		##### 試しを終了 ###########################################################################
+			a_list = a_string.split()
+			if not a_list: continue
+			first_string = a_list[0]
+			if first_string == "number_of_vertexes":
+				number_of_vertexes = int(a_list[1])
+			if first_string == "number_of_triangles":
+				number_of_triangles = int(a_list[1])
+			if first_string == "end_header":
+				get_tokens = (lambda file: file.readline().split())
+				collection_of_vertexes = []
+				for _ in range (number_of_vertexes):
+					a_list = get_tokens(a_file)
+					a_vertex = list(map(float, a_list[0:3]))
+					collection_of_vertexes.append(a_vertex)
+				index_to_vertex = (lambda index: collection_of_vertexes[index-1])
+				for _ in range(number_of_triangles):
+					a_list = get_tokens(a_file)
+					indexes = list(map(int, a_list[0:3]))
+					vertexes = list(map(index_to_vertex, indexes))
+					a_triangle = OpenGLTriangle(*vertexes)
+					a_triangle.rgb(0.8, 0.1, 0.1)
+					self._model.add(a_triangle)
 		self.set_projection(**dictionary)
 
 		self.set_projection(**dictionary)

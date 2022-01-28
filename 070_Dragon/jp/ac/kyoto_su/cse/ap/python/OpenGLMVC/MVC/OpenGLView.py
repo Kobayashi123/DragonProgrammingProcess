@@ -6,8 +6,8 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.6.2'
-__date__ = '2019/07/02 (Created: 2016/11/11)'
+__version__ = '0.7.0'
+__date__ = '2019/07/03 (Created: 2016/11/11)'
 
 import math
 
