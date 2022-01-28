@@ -6,7 +6,7 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.5.4'
+__version__ = '0.5.5'
 __date__ = '2019/07/01 (Created: 2016/11/11)'
 
 from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Parts.OpenGLObject import OpenGLObject
@@ -32,7 +32,7 @@ class OpenGLPolygon(OpenGLObject):
 		y = 0.0
 		z = 0.0
 		length = len(vertexes)
-		for i in range(0, vertexes):
+		for i in range(0, length):
 			j = (i + 1) % length
 			k = (i + 2) % length
 			map_function = (lambda each1, each2: each1 - each2)
