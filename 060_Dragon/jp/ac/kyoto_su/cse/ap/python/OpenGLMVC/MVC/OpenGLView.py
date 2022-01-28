@@ -6,8 +6,8 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.5.5'
-__date__ = '2019/07/01 (Created: 2016/11/11)'
+__version__ = '0.6.0'
+__date__ = '2019/07/02 (Created: 2016/11/11)'
 
 import math
 
@@ -35,6 +35,9 @@ class OpenGLView(QOpenGLWidget):
 		self._width = width
 		self._height = height
 		self._gl = None
+		self._angle_x = 0.0
+		self._angle_y = 0.0
+		self._angle_z = 0.0
 
 	def gluLookAt(self, eye, sight, up):
 		"""
@@ -153,6 +156,10 @@ class OpenGLView(QOpenGLWidget):
 		# 絶対座標系（X軸：赤、Y軸：緑、Z軸：青）を描きます。負方向を1とすると、正方向は黄金比(1.618)になります。
 		self.rendering_axes(gl)
 
+		# モデル座標系を回転させます。
+		gl.glRotated(self._angle_x, 1.0, 0.0, 0.0)
+		gl.glRotated(self._angle_y, 0.0, 1.0, 0.0)
+		gl.glRotated(self._angle_z, 0.0, 0.0, 1.0)
 		# モデルを描き出します。
 		self._model.rendering(gl)
 
