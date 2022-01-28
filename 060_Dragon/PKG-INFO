@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: 000_Dragon
+Version: 0.0.0
+Summary: Example written by Python 3.9.1
+Home-page: http://www.cc.kyoto-su.ac.jp/~atsushi/
+Author: AOKI Atsushi
+Author-email: aokisanhe@gmail.com
+License: The BSD 2-Clause License
+Description: このプログラムは京都産業大学・情報理工学部の科目「応用プログラミング（Python）」の例題プログラムです。
+Platform: macOS 10.14.6
