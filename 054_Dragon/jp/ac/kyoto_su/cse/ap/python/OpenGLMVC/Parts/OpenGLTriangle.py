@@ -6,7 +6,7 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.5.3'
+__version__ = '0.5.4'
 __date__ = '2019/07/01 (Created: 2016/11/11)'
 
 from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Parts.OpenGLObject import OpenGLObject
@@ -32,7 +32,7 @@ class OpenGLTriangle(OpenGLObject):
 		map_function = (lambda value1, value0: value1 - value0)
 		ux, uy, uz = list(map(map_function, vertex2, vertex1))
 		vx, vy, vz = list(map(map_function, vertex3, vertex1))
-		normal_vector = [(uy * vz - uz * vy), (uz * vx - ux * vz), (ux * vy - uy * ux)]
+		normal_vector = [(uy * vz - uz * vy), (uz * vx - ux * vz), (ux * vy - uy * vx)]
 		map_function = (lambda value: value * value)
 		distance = sum(list(map(map_function, normal_vector))) ** 0.5
 		map_function = (lambda vector: vector / distance)
