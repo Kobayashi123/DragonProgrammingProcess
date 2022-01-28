@@ -6,7 +6,7 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.6.1'
+__version__ = '0.6.2'
 __date__ = '2019/07/02 (Created: 2016/11/11)'
 
 import math
@@ -253,3 +253,15 @@ class OpenGLView(QOpenGLWidget):
 		マウスボタンが押された際にコントローラに通知します。
 		"""
 		self._controller.mouse(event)
+
+	def rotate_xy(self, amount_x, amount_y):
+		"""
+		X方向量とY方向量から回転量を算出して回転角を設定します。
+		"""
+		trace(self)
+
+		theta_y = (360.0 * (float(amount_x) / float(self._width)))
+		theta_x = (360.0 * (float(amount_y) / float(self._height)))
+
+		self._angle_x = (self._angle_x - theta_x) % 360.0
+		self._angle_y = (self._angle_y + theta_y) % 360.0
