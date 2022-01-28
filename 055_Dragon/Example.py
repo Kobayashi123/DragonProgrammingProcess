@@ -6,7 +6,7 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.5.4'
+__version__ = '0.5.5'
 __date__ = '2019/07/01 (Created: 2016/11/11)'
 
 import os
@@ -17,6 +17,7 @@ from PyQt5.QtWidgets import QApplication
 
 from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.MVC.OpenGLModel import OpenGLModel
 from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.OpenGLWindow import OpenGLWindow
+from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Parts.OpenGLPolygon import OpenGLPolygon
 from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Parts.OpenGLTriangle import OpenGLTriangle
 from jp.ac.kyoto_su.cse.ap.python.Trace import Trace    # トレース情報出力のON/OFFに用います。
 from jp.ac.kyoto_su.cse.ap.python.Trace import trace    # トレース情報出力のための関数です。
@@ -96,6 +97,31 @@ class DragonBody:
 			triangles.append(triangle)
 		# 三角形の表裏の両方を追加
 		self._model.add_all(triangles)
+		########################################################################
+
+		########################################################################
+		# モデルの表示物にカラーキューブ（色方体：六面体）を入れます。
+		########################################################################
+		surfaces = []
+		# 第一番：Z=1の面（法線ベクトル+Zの四角形）：青〜マゼンタ〜白〜シアン
+		surfaces.append([(0.0, 0.0, 1.0), (1.0, 0.0, 1.0), (1.0, 1.0, 1.0), (0.0, 1.0, 1.0)])
+		# 第ニ番：Z=0の面（法線ベクトル-Zの四角形）：緑〜黄〜赤〜黒
+		surfaces.append([(0.0, 1.0, 0.0), (1.0, 1.0, 0.0), (1.0, 0.0, 0.0), (0.0, 0.0, 0.0)])
+		# 第三番：X=1の面（法線ベクトル+Xの四角形）：赤〜黄〜白〜マゼンタ
+		surfaces.append([(1.0, 0.0, 0.0), (1.0, 1.0, 0.0), (1.0, 1.0, 1.0), (1.0, 0.0, 1.0)])
+		# 第四番：X=0の面（法線ベクトル-Xの四角形）：青〜シアン〜緑〜黒
+		surfaces.append([(0.0, 0.0, 1.0), (0.0, 1.0, 1.0), (0.0, 1.0, 0.0), (0.0, 0.0, 0.0)])
+		# 第五番：Y=1の面（法線ベクトル+Yの四角形）：シアン〜白〜黄〜緑
+		surfaces.append([(0.0, 1.0, 1.0), (1.0, 1.0, 1.0), (1.0, 1.0, 0.0), (0.0, 1.0, 0.0)])
+		# 第六番：Y=0の面（法線ベクトル-Yの四角形）：黒〜赤〜マゼンタ〜青
+		surfaces.append([(0.0, 0.0, 0.0), (1.0, 0.0, 0.0), (1.0, 0.0, 1.0), (0.0, 0.0, 1.0)])
+		# ポリゴン六個でカラーキューブ（色方体：六面体）
+		polygons = []
+		for surface in surfaces:
+			polygon = OpenGLPolygon(vertexes=surface, colors=surface)
+			polygons.append(polygon)
+		# 色方体の六面を追加
+		self._model.add_all(polygons)
 		########################################################################
 
 		##### 試しを終了 ###########################################################################
