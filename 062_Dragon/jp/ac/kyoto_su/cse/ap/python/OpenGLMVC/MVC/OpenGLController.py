@@ -6,7 +6,7 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.6.1'
+__version__ = '0.6.2'
 __date__ = '2019/07/02 (Created: 2016/11/11)'
 
 import sys
@@ -79,6 +79,8 @@ class OpenGLController:
 			'z': function_z, 'Z': function_Z, \
 			's': function_s, 'S': function_S, \
 			}
+		self._mouse_pressed_x = None
+		self._mouse_pressed_y = None
 
 	def close(self):
 		"""
@@ -107,7 +109,17 @@ class OpenGLController:
 		"""
 		trace(self)
 
-		(lambda x: x) (event)
+		button = event.button()
+		if button in (Qt.LeftButton, Qt.NoButton):
+			position = event.pos()
+			position_x = position.x()
+			position_y = position.y()
+			amount_x = position_x - self._mouse_pressed_x
+			amount_y = self._mouse_pressed_y - position_y
+			self._view.rotate_xy(amount_x, amount_y)
+			self._mouse_pressed_x = position_x
+			self._mouse_pressed_y = position_y
+			self._view.update()
 
 	def mouse(self, event):
 		"""
@@ -115,4 +127,10 @@ class OpenGLController:
 		"""
 		trace(self)
 
-		(lambda x: x) (event)
+		button = event.button()
+		if button == Qt.LeftButton:
+			position = event.pos()
+			position_x = position.x()
+			position_y = position.y()
+			self._mouse_pressed_x = position_x
+			self._mouse_pressed_y = position_y
