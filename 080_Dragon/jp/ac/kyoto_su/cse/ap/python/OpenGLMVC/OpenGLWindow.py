@@ -6,8 +6,8 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.7.0'
-__date__ = '2019/07/03 (Created: 2016/11/11)'
+__version__ = '0.8.0'
+__date__ = '2019/07/04 (Created: 2016/11/11)'
 
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import QPoint
