@@ -6,14 +6,15 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.8.0'
+__version__ = '0.8.1'
 __date__ = '2019/07/04 (Created: 2016/11/11)'
 
 import sys
 
 from PyQt5.QtWidgets import QApplication
 
-from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Bodies.DragonBody import DragonBody
+# from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Bodies.DragonBody import DragonBody
+from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Bodies.WaspBody import WaspBody
 from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.MVC.OpenGLModel import OpenGLModel
 from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.OpenGLWindow import OpenGLWindow
 from jp.ac.kyoto_su.cse.ap.python.Trace import Trace    # トレース情報出力のON/OFFに用います。
@@ -32,8 +33,12 @@ def main():
 	model = OpenGLModel()
 
 	# ドラゴン立体のインスタンスを生成し、モデルに表示物を登録します。
-	dragon = DragonBody(model)
-	dragon.make_body()
+	# dragon = DragonBody(model)
+	# dragon.make_body()
+
+	# スズメバチ立体のインスタンスを生成し、モデルに表示物を登録します。
+	wasp = WaspBody(model)
+	wasp.make_body()
 
 	# アプリケーションのインスタンスを生成します。
 	application = QApplication(sys.argv)
