@@ -15,18 +15,18 @@ import urllib.request
 from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Parts.OpenGLPolygon import OpenGLPolygon
 from jp.ac.kyoto_su.cse.ap.python.Trace import trace    # トレース情報出力のための関数です。
 
-class WaspBody:
+class PenguinBody:
 	"""
-	スズメバチ立体です。
+	ペンギン立体です。
 	"""
 
 	def __init__(self, model):
 		"""
-		モデル（OpenGLModel）からスズメバチ立体のインスタンスを生成します。
+		モデル（OpenGLModel）からペンギン立体のインスタンスを生成します。
 		"""
 		trace(self)
 
-		self._url = 'http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/Wasp/wasp.txt'
+		self._url = 'http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/Penguin/penguin.txt'
 		self._model = model
 
 	def make_body(self):
@@ -39,7 +39,7 @@ class WaspBody:
 
 	def read(self):
 		"""
-		スズメバチ立体ファイルのURLよりダウンロードしたファイルから立体を読み込みます。
+		ペンギン立体ファイルのURLよりダウンロードしたファイルから立体を読み込みます。
 		"""
 		trace(self)
 
@@ -55,17 +55,17 @@ class WaspBody:
 			self.read_all(a_file, \
 				number_of_vertexes=None, \
 				number_of_triangles=None, \
-				eye_point_xyz=[-5.5852450791872, 3.07847342734, 15.794105252496], \
-				sight_point_xyz=[0.19825005531311, 1.8530999422073, -0.63795006275177], \
-				up_vector_xyz=[0.070077999093727, 0.99630606032682, -0.049631725731267], \
-				fovy=41.480099231656, \
-				axes_scale=4.0, \
-				body_name='スズメバチ', \
+				eye_point_xyz=[-6.6153435525924, 3.5413918991617, 27.440373330962], \
+				sight_point_xyz=[0.070155, 0.108575, 0.056235], \
+				up_vector_xyz=[0.03950581341181, 0.99260439594225, -0.11478590446043], \
+				fovy=13.527497808711, \
+				axes_scale=2.0, \
+				body_name='ペンギン', \
 			)
 
 	def read_all(self, a_file, **dictionary):
 		"""
-		スズメバチ立体ファイルを読み込んで、モデルに表示物を登録し、プロジェクション情報も登録します。
+		ペンギン立体ファイルを読み込んで、モデルに表示物を登録し、プロジェクション情報も登録します。
 		"""
 		trace(self)
 
@@ -93,10 +93,13 @@ class WaspBody:
 					index = number_of_indexes + 1
 					indexes = list(map(int, a_list[1:index]))
 					vertexes = list(map(index_to_vertex, indexes))
-					rgb_color = list(map(float, a_list[index:index+3]))
 					a_polygon = OpenGLPolygon(vertexes)
-					a_polygon.rgb(*rgb_color)
 					self._model.add(a_polygon)
+				for n_th in range(number_of_polygons):
+					a_list = get_tokens(a_file)
+					rgb_color = list(map(float, a_list[0:3]))
+					a_polygon = self._model._objects[n_th]
+					a_polygon.rgb(*rgb_color)
 		self.set_projection(**dictionary)
 
 	def set_projection(self, **dictionary):

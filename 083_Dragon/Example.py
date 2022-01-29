@@ -6,7 +6,7 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.8.2'
+__version__ = '0.8.3'
 __date__ = '2019/07/04 (Created: 2016/11/11)'
 
 import sys
@@ -15,7 +15,8 @@ from PyQt5.QtWidgets import QApplication
 
 # from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Bodies.DragonBody import DragonBody
 # from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Bodies.WaspBody import WaspBody
-from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Bodies.BunnyBody import BunnyBody
+# from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Bodies.BunnyBody import BunnyBody
+from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Bodies.PenguinBody import PenguinBody
 from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.MVC.OpenGLModel import OpenGLModel
 from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.OpenGLWindow import OpenGLWindow
 from jp.ac.kyoto_su.cse.ap.python.Trace import Trace    # トレース情報出力のON/OFFに用います。
@@ -42,8 +43,12 @@ def main():
 	# wasp.make_body()
 
 	# うさぎ立体のインスタンスを生成し、モデルに表示物を登録します。
-	bunny = BunnyBody(model)
-	bunny.make_body()
+	# bunny = BunnyBody(model)
+	# bunny.make_body()
+
+	# ペンギン立体のインスタンスを生成し、モデルに表示物を登録します。
+	penguin = PenguinBody(model)
+	penguin.make_body()
 
 	# アプリケーションのインスタンスを生成します。
 	application = QApplication(sys.argv)
