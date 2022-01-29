@@ -12,21 +12,21 @@ __date__ = '2019/07/04 (Created: 2016/11/11)'
 import os
 import urllib.request
 
-from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Parts.OpenGLPolygon import OpenGLPolygon
+from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Parts.OpenGLTriangle import OpenGLTriangle
 from jp.ac.kyoto_su.cse.ap.python.Trace import trace    # トレース情報出力のための関数です。
 
-class WaspBody:
+class BunnyBody:
 	"""
-	スズメバチ立体です。
+	うさぎ立体です。
 	"""
 
 	def __init__(self, model):
 		"""
-		モデル（OpenGLModel）からスズメバチ立体のインスタンスを生成します。
+		モデル（OpenGLModel）からうさぎ立体のインスタンスを生成します。
 		"""
 		trace(self)
 
-		self._url = 'http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/Wasp/wasp.txt'
+		self._url = 'http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/Bunny/bunny.ply'
 		self._model = model
 
 	def make_body(self):
@@ -39,7 +39,7 @@ class WaspBody:
 
 	def read(self):
 		"""
-		スズメバチ立体ファイルのURLよりダウンロードしたファイルから立体を読み込みます。
+		うさぎ立体ファイルのURLよりダウンロードしたファイルから立体を読み込みます。
 		"""
 		trace(self)
 
@@ -55,19 +55,32 @@ class WaspBody:
 			self.read_all(a_file, \
 				number_of_vertexes=None, \
 				number_of_triangles=None, \
-				eye_point_xyz=[-5.5852450791872, 3.07847342734, 15.794105252496], \
-				sight_point_xyz=[0.19825005531311, 1.8530999422073, -0.63795006275177], \
-				up_vector_xyz=[0.070077999093727, 0.99630606032682, -0.049631725731267], \
-				fovy=41.480099231656, \
-				axes_scale=4.0, \
-				body_name='スズメバチ', \
+				eye_point_xyz=None, \
+				sight_point_xyz=None, \
+				up_vector_xyz=None, \
+				fovy=None, \
+				axes_scale=0.1, \
+				body_name='うさぎ', \
 			)
 
 	def read_all(self, a_file, **dictionary):
 		"""
-		スズメバチ立体ファイルを読み込んで、モデルに表示物を登録し、プロジェクション情報も登録します。
+		うさぎ立体ファイルを読み込んで、モデルに表示物を登録し、プロジェクション情報も登録します。
 		"""
 		trace(self)
+
+		def comment_processing(a_list):
+			first_string = a_list[0]
+			if first_string == "comment":
+				second_string = a_list[1]
+				if second_string == "eye_point_xyz":
+					dictionary["eye_point_xyz"] = list(map(float, a_list[2:5]))
+				if second_string == "sight_point_xyz":
+					dictionary["sight_point_xyz"] = list(map(float, a_list[2:5]))
+				if second_string == "up_vector_xyz":
+					dictionary["up_vector_xyz"] = list(map(float, a_list[2:5]))
+				if second_string == "zoom_height" and a_list[3] == "fovy":
+					dictionary["fovy"] = float(a_list[4])
 
 		while True:
 			a_string = a_file.readline()
@@ -75,10 +88,12 @@ class WaspBody:
 			a_list = a_string.split()
 			if not a_list: continue
 			first_string = a_list[0]
-			if first_string == "number_of_vertexes":
-				number_of_vertexes = int(a_list[1])
-			if first_string == "number_of_polygons":
-				number_of_polygons = int(a_list[1])
+			if first_string == "element":
+				second_string = a_list[1]
+				if second_string == "vertex":
+					number_of_vertexes = int(a_list[2])
+				if second_string == "face":
+					number_of_faces = int(a_list[2])
 			if first_string == "end_header":
 				get_tokens = (lambda file: file.readline().split())
 				collection_of_vertexes = []
@@ -86,17 +101,15 @@ class WaspBody:
 					a_list = get_tokens(a_file)
 					a_vertex = list(map(float, a_list[0:3]))
 					collection_of_vertexes.append(a_vertex)
-				index_to_vertex = (lambda index: collection_of_vertexes[index-1])
-				for _ in range(number_of_polygons):
+				index_to_vertex = (lambda index: collection_of_vertexes[index])
+				for _ in range(number_of_faces):
 					a_list = get_tokens(a_file)
-					number_of_indexes = int(a_list[0])
-					index = number_of_indexes + 1
-					indexes = list(map(int, a_list[1:index]))
+					indexes = list(map(int, a_list[1:4]))
 					vertexes = list(map(index_to_vertex, indexes))
-					rgb_color = list(map(float, a_list[index:index+3]))
-					a_polygon = OpenGLPolygon(vertexes)
-					a_polygon.rgb(*rgb_color)
-					self._model.add(a_polygon)
+					a_tringle = OpenGLTriangle(*vertexes)
+					a_tringle.rgb(1.0, 1.0, 1.0)
+					self._model.add(a_tringle)
+			comment_processing(a_list)
 		self.set_projection(**dictionary)
 
 	def set_projection(self, **dictionary):
