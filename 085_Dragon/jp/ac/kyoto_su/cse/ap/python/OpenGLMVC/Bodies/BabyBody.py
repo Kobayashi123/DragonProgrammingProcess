@@ -26,7 +26,7 @@ class BabyBody:
 		"""
 		trace(self)
 
-		self._url = 'http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/Oni/baby.txt'
+		self._url = 'http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/Baby/baby.txt'
 		self._model = model
 
 	def make_body(self):
