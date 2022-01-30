@@ -6,7 +6,7 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.8.4'
+__version__ = '0.8.5'
 __date__ = '2019/07/04 (Created: 2016/11/11)'
 
 import sys
@@ -17,7 +17,8 @@ from PyQt5.QtWidgets import QApplication
 # from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Bodies.WaspBody import WaspBody
 # from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Bodies.BunnyBody import BunnyBody
 # from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Bodies.PenguinBody import PenguinBody
-from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Bodies.OniBody import OniBody
+# from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Bodies.OniBody import OniBody
+from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Bodies.BabyBody import BabyBody
 from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.MVC.OpenGLModel import OpenGLModel
 from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.OpenGLWindow import OpenGLWindow
 from jp.ac.kyoto_su.cse.ap.python.Trace import Trace    # トレース情報出力のON/OFFに用います。
@@ -52,8 +53,12 @@ def main():
 	# penguin.make_body()
 
 	# 鬼立体のインスタンスを生成し、モデルに表示物を登録します。
-	oni = OniBody(model)
-	oni.make_body()
+	# oni = OniBody(model)
+	# oni.make_body()
+
+	# 赤ちゃん立体のインスタンスを生成し、モデルに表示物を登録します。
+	baby = BabyBody(model)
+	baby.make_body()
 
 	# アプリケーションのインスタンスを生成します。
 	application = QApplication(sys.argv)
