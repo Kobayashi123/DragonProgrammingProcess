@@ -12,21 +12,21 @@ __date__ = '2019/07/04 (Created: 2016/11/11)'
 import os
 import urllib.request
 
-from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Parts.OpenGLTriangle import OpenGLTriangle
+from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Parts.OpenGLPolygon import OpenGLPolygon
 from jp.ac.kyoto_su.cse.ap.python.Trace import trace    # トレース情報出力のための関数です。
 
-class DragonBody:
+class OniBody:
 	"""
-	ドラゴン立体です。
+	鬼立体です。
 	"""
 
 	def __init__(self, model):
 		"""
-		モデル（OpenGLModel）からドラゴン立体のインスタンスを生成します。
+		モデル（OpenGLModel）から鬼立体のインスタンスを生成します。
 		"""
 		trace(self)
 
-		self._url = 'http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/Dragon/dragon.txt'
+		self._url = 'http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/Oni/oni.txt'
 		self._model = model
 
 	def make_body(self):
@@ -39,7 +39,7 @@ class DragonBody:
 
 	def read(self):
 		"""
-		ドラゴン立体ファイルのURLよりダウンロードしたファイルから立体を読み込みます。
+		鬼立体ファイルのURLよりダウンロードしたファイルから立体を読み込みます。
 		"""
 		trace(self)
 
@@ -51,21 +51,21 @@ class DragonBody:
 		if not (os.path.exists(a_file) and os.path.isfile(a_file)):
 			urllib.request.urlretrieve(self._url, a_file)
 
-		with open(a_file, "r", encoding = 'utf-8') as a_file:
+		with open(a_file, "r", encoding='utf-8') as a_file:
 			self.read_all(a_file, \
 				number_of_vertexes=None, \
 				number_of_triangles=None, \
-				eye_point_xyz=[-5.5852450791872, 3.07847342734, 15.794105252496], \
-				sight_point_xyz=[0.27455347776413, 0.20096999406815, -0.11261999607086], \
-				up_vector_xyz=[0.1018574904194, 0.98480906061847, -0.14062775604137], \
-				fovy=12.642721790235, \
-				axes_scale=1.0, \
-				body_name='ドラゴン', \
+				eye_point_xyz=[-6.6153435525924, 3.5413918991617, 27.440373330962], \
+				sight_point_xyz=[-0.056150078773499, 0.022249937057495, -2.1525999903679], \
+				up_vector_xyz=[0.03835909829153, 0.99323407243554, -0.10961139051838], \
+				fovy=19.221287002173, \
+				axes_scale=2.7, \
+				body_name='鬼', \
 			)
 
 	def read_all(self, a_file, **dictionary):
 		"""
-		ドラゴン立体ファイルを読み込んで、モデルに表示物を登録し、プロジェクション情報も登録します。
+		鬼立体ファイルを読み込んで、モデルに表示物を登録し、プロジェクション情報も登録します。
 		"""
 		trace(self)
 
@@ -77,8 +77,10 @@ class DragonBody:
 			first_string = a_list[0]
 			if first_string == "number_of_vertexes":
 				number_of_vertexes = int(a_list[1])
-			if first_string == "number_of_triangles":
-				number_of_triangles = int(a_list[1])
+			if first_string == "number_of_polygons":
+				number_of_polygons = int(a_list[1])
+			if first_string == "number_of_colors":
+				number_of_colors = int(a_list[1])
 			if first_string == "end_header":
 				get_tokens = (lambda file: file.readline().split())
 				collection_of_vertexes = []
@@ -87,13 +89,27 @@ class DragonBody:
 					a_vertex = list(map(float, a_list[0:3]))
 					collection_of_vertexes.append(a_vertex)
 				index_to_vertex = (lambda index: collection_of_vertexes[index-1])
-				for _ in range(number_of_triangles):
+				collection_of_indexes = []
+				for _ in range(number_of_polygons):
 					a_list = get_tokens(a_file)
-					indexes = list(map(int, a_list[0:3]))
+					number_of_indexes = int(a_list[0])
+					index = number_of_indexes + 1
+					indexes = list(map(int, a_list[1:index]))
 					vertexes = list(map(index_to_vertex, indexes))
-					a_triangle = OpenGLTriangle(*vertexes)
-					a_triangle.rgb(0.8, 0.1, 0.1)
-					self._model.add(a_triangle)
+					index = int(a_list[index])
+					collection_of_indexes.append(index)
+					a_polygon = OpenGLPolygon(vertexes)
+					self._model.add(a_polygon)
+				collection_of_colors = []
+				for _ in range(number_of_colors):
+					a_list = get_tokens(a_file)
+					rgb_color = list(map(float, a_list[0:3]))
+					collection_of_colors.append(rgb_color)
+				for n_th in range(number_of_polygons):
+					index = collection_of_indexes[n_th]
+					rgb_color = collection_of_colors[index - 1]
+					a_polygon = self._model._objects[n_th]
+					a_polygon.rgb(*rgb_color)
 		self.set_projection(**dictionary)
 
 	def set_projection(self, **dictionary):

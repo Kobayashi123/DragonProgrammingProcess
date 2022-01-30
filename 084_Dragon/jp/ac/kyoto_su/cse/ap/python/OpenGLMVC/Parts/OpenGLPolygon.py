@@ -6,7 +6,7 @@
 """
 
 __author__ = 'AOKI Atsushi'
-__version__ = '0.8.3'
+__version__ = '0.8.4'
 __date__ = '2019/07/04 (Created: 2016/11/11)'
 
 from jp.ac.kyoto_su.cse.ap.python.OpenGLMVC.Parts.OpenGLObject import OpenGLObject
